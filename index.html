@@ -1,89 +1,247 @@
-<!DOCTYPE html>
+<!--
+CPD Portfolio - single-file HTML template
+Edit the `SITE` object inside the <script> near the bottom to customize your name, photo, contact details,
+and the `cpdEntries` array to add/remove CPD records.
+
+To publish: push this file as `index.html` to a GitHub repo named `yourusername.github.io`.
+-->
+
+<!doctype html>
 <html lang="en">
-head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Your Name — CPD Portfolio</title>
-  <link rel="stylesheet" href="styles.css" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CPD Portfolio — Your Name</title>
+  <meta name="description" content="Continuous Professional Development (CPD) portfolio" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724; --card:#0b1220; --muted:#9aa6ba; --accent:#6ee7b7; --glass: rgba(255,255,255,0.03);
+      --radius:14px; font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:linear-gradient(180deg,var(--bg),#071023);color:#e6eef8;-webkit-font-smoothing:antialiased}
+    .container{max-width:980px;margin:36px auto;padding:28px}
+
+    header{display:flex;gap:20px;align-items:center}
+    .avatar{width:110px;height:110px;border-radius:18px;overflow:hidden;flex:0 0 110px;background:linear-gradient(135deg,#0b1220,#122033)}
+    .avatar img{width:100%;height:100%;object-fit:cover}
+    h1{margin:0;font-size:28px}
+    .subtitle{color:var(--muted);margin-top:6px}
+
+    .grid{display:grid;grid-template-columns:1fr 320px;gap:22px;margin-top:24px}
+    .card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:0 6px 30px rgba(2,6,23,0.6)}
+
+    .cpd-list{display:grid;gap:12px}
+    .cpd-item{display:flex;gap:12px;padding:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border-radius:12px}
+    .cpd-meta{min-width:92px;text-align:right;color:var(--muted);font-size:13px}
+    .cpd-body{flex:1}
+    .cpd-title{margin:0;font-weight:600}
+    .cpd-desc{margin:6px 0;color:var(--muted);font-size:14px}
+    .tags{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.03);color:var(--muted)}
+
+    /* Sidebar */
+    .sidebar h3{margin:0 0 8px 0}
+    .contact-list{display:flex;flex-direction:column;gap:8px}
+    .skill{display:flex;justify-content:space-between;margin:8px 0}
+    .progress{height:8px;background:var(--glass);border-radius:999px;overflow:hidden}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#41b3ff)}
+
+    footer{margin-top:22px;color:var(--muted);text-align:center;font-size:13px}
+
+    /* small screens */
+    @media (max-width:880px){
+      .grid{grid-template-columns:1fr}
+      .sidebar{order:2}
+    }
+
+    /* Buttons */
+    .btn{display:inline-block;padding:8px 12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);cursor:pointer}
+    .btn-primary{background:var(--accent);color:#022;box-shadow:0 8px 20px rgba(24,160,130,0.08);border:none}
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    a{color:inherit;text-decoration:none}
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container">
-      <h1>Your Name</h1>
-      <p>Professional Title / Role</p>
-      <nav class="site-nav">
-        <ul>
-          <li><a href="#about">About</a></li>
-          <li><a href="#cpd">CPD Activities</a></li>
-          <li><a href="#reflection">Reflections</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <section id="about" class="section about">
-      <div class="container">
-        <h2>About Me</h2>
-        <p>Write a short professional summary, background, what motivates your CPD, etc.</p>
-      </div>
-    </section>
-
-    <section id="cpd" class="section cpd-activities">
-      <div class="container">
-        <h2>CPD Activities</h2>
-        <div class="activity-list">
-          <!-- repeat for each activity -->
-          <div class="activity">
-            <h3>Title of Activity / Course</h3>
-            <p><strong>Date:</strong> YYYY-MM-DD</p>
-            <p><strong>Description:</strong> Description of what was done / learned.</p>
-            <p><strong>Hours / Credits:</strong> X hours</p>
-            <p><strong>Evidence / Link:</strong> <a href="#">Certificate / Document</a></p>
-          </div>
-          <!-- end repeat -->
+  <div class="container">
+    <header>
+      <div class="avatar"><img id="avatarImg" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=60" alt="avatar"></div>
+      <div>
+        <h1 id="siteName">Your Name <span class="muted">— CPD Portfolio</span></h1>
+        <div class="subtitle" id="role">Professional Title / e.g. Software Engineer</div>
+        <div style="margin-top:10px">
+          <button class="btn" id="downloadCvBtn">Download CV</button>
+          <button class="btn btn-primary" id="addEntryBtn">Add CPD (local only)</button>
         </div>
       </div>
-    </section>
+    </header>
 
-    <section id="reflection" class="section reflections">
-      <div class="container">
-        <h2>Reflections & Outcomes</h2>
-        <div class="reflection-list">
-          <!-- repeat -->
-          <div class="reflection">
-            <h3>Activity Title</h3>
-            <p><strong>What went well:</strong> …</p>
-            <p><strong>Challenges:</strong> …</p>
-            <p><strong>Learning / Next steps:</strong> …</p>
+    <div class="grid">
+      <main>
+        <section class="card">
+          <h2 style="margin-top:0">About</h2>
+          <p id="aboutText" class="muted">Short personal summary goes here. Explain your CPD goals and how you use this portfolio to track learning.</p>
+        </section>
+
+        <section class="card" style="margin-top:16px">
+          <h2 style="margin-top:0">CPD Records</h2>
+          <div id="cpdList" class="cpd-list" aria-live="polite"></div>
+        </section>
+
+        <section class="card" style="margin-top:16px">
+          <h2 style="margin-top:0">Timeline</h2>
+          <p class="muted">Chronological view is implemented as a compact list below.</p>
+          <div id="timeline" style="margin-top:12px"></div>
+        </section>
+      </main>
+
+      <aside class="sidebar">
+        <div class="card">
+          <h3>Contact</h3>
+          <div class="contact-list" id="contactList"></div>
+          <hr style="margin:12px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)">
+          <h3>Skills</h3>
+          <div id="skills"></div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <h3>Quick Filters</h3>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn" onclick="filter('all')">All</button>
+            <button class="btn" onclick="filter('training')">Training</button>
+            <button class="btn" onclick="filter('reading')">Reading</button>
+            <button class="btn" onclick="filter('project')">Project</button>
           </div>
-          <!-- end repeat -->
+        </div>
+      </aside>
+    </div>
+
+    <footer>© <span id="footerName">Your Name</span> — Built with a tiny HTML template</footer>
+  </div>
+
+  <!-- Modal for adding entry (client-side only) -->
+  <div id="modal" style="display:none;position:fixed;inset:0;background:rgba(2,6,23,0.6);align-items:center;justify-content:center">
+    <div style="width:92%;max-width:680px;background:var(--card);padding:18px;border-radius:12px">
+      <h3 style="margin-top:0">Add CPD entry</h3>
+      <div style="display:grid;gap:8px">
+        <input id="m-title" placeholder="Title" />
+        <input id="m-date" placeholder="Date (YYYY-MM-DD)" />
+        <input id="m-type" placeholder="Type (training / reading / project)" />
+        <textarea id="m-desc" placeholder="Short description"></textarea>
+        <input id="m-link" placeholder="Optional link (github, certificate)" />
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <button class="btn" onclick="closeModal()">Cancel</button>
+          <button class="btn btn-primary" onclick="saveModal()">Save</button>
         </div>
       </div>
-    </section>
-
-    <section id="skills" class="section skills">
-      <div class="container">
-        <h2>Skills & Competencies</h2>
-        <ul class="skills-list">
-          <li>Skill / Competency A — Level / comment</li>
-          <li>Skill / Competency B — Level / comment</li>
-          <!-- more -->
-        </ul>
-      </div>
-    </section>
-  </main>
-
-  <footer id="contact" class="site-footer">
-    <div class="container">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:you@example.com">you@example.com</a></p>
-      <p>LinkedIn: <a href="https://linkedin.com/in/yourprofile" target="_blank">Your LinkedIn</a></p>
     </div>
-  </footer>
+  </div>
 
-  <script src="script.js"></script>
+  <script>
+    // === SITE DATA - edit this object to customise the portfolio ===
+    const SITE = {
+      name: "Your Name",
+      role: "Data Analyst / Researcher",
+      about: "I use this CPD portfolio to track courses, workshops, and practical projects that develop my professional skills.",
+      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=800&q=60",
+      footerName: "Your Name",
+      contact: [
+        {type:'Email', value:'you@example.com', href:'mailto:you@example.com'},
+        {type:'LinkedIn', value:'linkedin.com/in/yourname', href:'https://linkedin.com'},
+        {type:'GitHub', value:'github.com/yourname', href:'https://github.com'}
+      ],
+      skills: [
+        {name:'Data Analysis', level:86},
+        {name:'Project Management', level:72},
+        {name:'Python', level:88}
+      ],
+
+      // initial CPD entries - edit, reorder or remove
+      cpdEntries: [
+        {title:'Online course: Advanced Data Visualisation', date:'2024-09-12', type:'training', desc:'Completed a 6-week course on visual storytelling and best practices using Power BI and D3.', link:'#', tags:['PowerBI','Visualization']},
+        {title:'Reading: Research methods in education', date:'2024-06-03', type:'reading', desc:'Critical reading on qualitative and quantitative methods applied to higher education studies', link:'#', tags:['Research','Methods']},
+        {title:'Project: Student feedback dashboard', date:'2023-11-20', type:'project', desc:'Built an interactive dashboard to display survey results and KPIs for the student union.', link:'#', tags:['PowerBI','Project']}
+      ]
+    }
+
+    // === render helpers ===
+    const cpdList = document.getElementById('cpdList')
+    const timeline = document.getElementById('timeline')
+    const contactList = document.getElementById('contactList')
+    const skillsEl = document.getElementById('skills')
+
+    function renderSite(){
+      document.getElementById('siteName').firstChild.nodeValue = SITE.name + ' '
+      document.getElementById('role').textContent = SITE.role
+      document.getElementById('aboutText').textContent = SITE.about
+      document.getElementById('avatarImg').src = SITE.avatar
+      document.getElementById('footerName').textContent = SITE.footerName
+
+      contactList.innerHTML = SITE.contact.map(c => `<div><strong>${c.type}:</strong> <a href="${c.href}" target="_blank">${c.value}</a></div>`).join('')
+      skillsEl.innerHTML = SITE.skills.map(s => `<div class="skill"><div>${s.name}</div><div style="width:48%"><div class="progress" aria-hidden><i style="width:${s.level}%"></i></div></div></div>`).join('')
+
+      renderEntries(SITE.cpdEntries)
+    }
+
+    function renderEntries(entries){
+      // sort newest first
+      const sorted = [...entries].sort((a,b) => (b.date || '').localeCompare(a.date || ''))
+      cpdList.innerHTML = sorted.map(e => `
+        <article class="cpd-item" data-type="${e.type}">
+          <div class="cpd-meta">${e.date||''}</div>
+          <div class="cpd-body">
+            <h4 class="cpd-title">${e.title}</h4>
+            <p class="cpd-desc">${e.desc}</p>
+            <div class="tags">${(e.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+            ${e.link?`<div style="margin-top:8px"><a href="${e.link}" target="_blank" class="btn">View</a></div>`:''}
+          </div>
+        </article>
+      `).join('')
+
+      // timeline simple view
+      timeline.innerHTML = sorted.map(e => `<div style="padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.02)"><strong>${e.date}</strong> — ${e.title}</div>`).join('')
+    }
+
+    // Filtering
+    function filter(type){
+      const items = document.querySelectorAll('.cpd-item')
+      items.forEach(it => {
+        it.style.display = (type==='all' || it.dataset.type===type) ? 'flex' : 'none'
+      })
+    }
+
+    // Modal controls (client-side only; entries are not saved to server)
+    const modal = document.getElementById('modal')
+    document.getElementById('addEntryBtn').addEventListener('click', ()=>{ modal.style.display='flex' })
+    function closeModal(){ modal.style.display='none' }
+    function saveModal(){
+      const e = {
+        title: document.getElementById('m-title').value || 'Untitled',
+        date: document.getElementById('m-date').value || new Date().toISOString().slice(0,10),
+        type: document.getElementById('m-type').value || 'training',
+        desc: document.getElementById('m-desc').value || '',
+        link: document.getElementById('m-link').value || '#',
+        tags: []
+      }
+      SITE.cpdEntries.push(e)
+      renderEntries(SITE.cpdEntries)
+      closeModal()
+    }
+
+    // Download CV button - link to external file or trigger download if hosted
+    document.getElementById('downloadCvBtn').addEventListener('click', ()=>{
+      // configure a CV URL in SITE.contact or replace with actual file path in the repo
+      window.open(SITE.contact.find(c=>c.type==='GitHub')?.href || '#', '_blank')
+    })
+
+    // Initial render
+    renderSite()
+  </script>
 </body>
 </html>
+
