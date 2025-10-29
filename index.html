@@ -1,160 +1,260 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lang Cheng | CPD Portfolio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Lang Cheng — CPD Portfolio</title>
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
   <style>
-    :root {
-      --bg: #ffffff;
-      --text: #222222;
-      --accent: #0078d4;
-      --card-bg: #f7f9fa;
+    :root{
+      --bg:#fbfcfe; --card:#ffffff; --muted:#6b7280; --accent:#0078d4; --radius:14px;
+      --chip-bg:#eef6ff;
     }
-    body {
-      margin: 0;
-      font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:"Inter",system-ui,Arial,sans-serif; color:#111827; background:var(--bg);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 2rem 5%;
-      border-bottom: 1px solid #e5e5e5;
+    header{
+      display:flex; align-items:center; justify-content:space-between; gap:1rem;
+      padding:1.25rem 6%; background:linear-gradient(90deg,#ffffff, #f7fbff);
+      border-bottom:1px solid #e6eef8; position:sticky; top:0; z-index:20;
     }
-    header h1 {
-      font-size: 1.8rem;
-      margin: 0;
+    .brand {display:flex; align-items:center; gap:0.9rem}
+    .brand h1{font-size:1.15rem; margin:0; letter-spacing:0.2px}
+    nav a{color:var(--muted); text-decoration:none; margin-left:1rem; font-size:0.95rem}
+    nav a:hover{color:var(--accent)}
+    .icons a {margin-left:0.75rem; color:var(--muted); text-decoration:none; font-size:1.25rem}
+    .icons a:hover {color:var(--accent)}
+    main{max-width:1100px; margin:2rem auto; padding:0 2rem;}
+    .hero{
+      display:grid; grid-template-columns: 140px 1fr; gap:1.2rem; align-items:center;
+      background:var(--card); border-radius:var(--radius); padding:1.1rem; box-shadow:0 6px 18px rgba(16,24,40,0.04);
     }
-    header .icons a {
-      color: var(--text);
-      margin-left: 1rem;
-      font-size: 1.5rem;
-      text-decoration: none;
-      transition: color 0.2s;
+    .avatar{
+      width:140px; height:140px; border-radius:50%; overflow:hidden; border:4px solid var(--accent);
+      display:flex;align-items:center;justify-content:center;background:#f3f8ff;
     }
-    header .icons a:hover {
-      color: var(--accent);
+    .avatar img{width:100%; height:100%; object-fit:cover; display:block}
+    .bio {padding-right:0.5rem}
+    .bio p{margin:0 0 0.6rem; font-size:0.98rem; color:#111827}
+    .bio .muted {color:var(--muted); font-size:0.9rem}
+    .chips {display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:0.6rem}
+    .chip {background:var(--chip-bg); padding:0.35rem 0.6rem; border-radius:999px; font-size:0.85rem; color:#0f172a}
+
+    section {margin-top:1.8rem}
+    h2{font-size:1.05rem;margin:0 0 0.6rem;padding-left:0.6rem;border-left:4px solid var(--accent)}
+    .grid {display:grid; gap:1rem}
+    .skills {display:flex; gap:0.5rem; flex-wrap:wrap}
+    .card{
+      background:var(--card); border-radius:12px; padding:1rem; box-shadow:0 6px 16px rgba(15,23,42,0.04);
     }
-    main {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-    section {
-      margin-bottom: 3rem;
-    }
-    h2 {
-      border-left: 4px solid var(--accent);
-      padding-left: 0.6rem;
-      font-size: 1.4rem;
-    }
-    .about {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-    .about img {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid var(--accent);
-    }
-    .cpd-card, .video-card {
-      background: var(--card-bg);
-      padding: 1rem 1.2rem;
-      border-radius: 12px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-      margin-bottom: 1rem;
-    }
-    .cpd-card h3, .video-card h3 {
-      margin: 0 0 0.3rem;
-    }
-    .video-card iframe, .video-card video {
-      width: 100%;
-      border-radius: 10px;
-      margin-top: 0.5rem;
-    }
-    footer {
-      text-align: center;
-      padding: 2rem 0;
-      font-size: 0.9rem;
-      border-top: 1px solid #e5e5e5;
-      color: #666;
+
+    .projects {grid-template-columns: repeat(auto-fit,minmax(260px,1fr));}
+    .project-card {padding:0.9rem; border-radius:12px; display:flex; flex-direction:column; gap:0.5rem}
+    .project-card h3{margin:0; font-size:1rem}
+    .project-card p{margin:0;color:var(--muted); font-size:0.9rem}
+    .project-links {margin-top:auto; display:flex; gap:0.5rem; align-items:center}
+    .btn {padding:0.45rem 0.7rem; border-radius:8px; text-decoration:none; font-size:0.9rem}
+    .btn-outline {border:1px solid #e6eef8; color:var(--accent); background:transparent}
+    .btn-primary {background:var(--accent); color:white; border:none}
+
+    .media {display:grid; gap:0.8rem}
+    .video-card iframe, .video-card video{width:100%; border-radius:10px; height:240px; background:#000}
+    footer{max-width:1100px;margin:2rem auto;color:var(--muted); font-size:0.9rem;padding:0 2rem}
+    .credits{font-size:0.82rem; color:#475569; margin-top:0.6rem}
+    @media (max-width:700px){
+      .hero{grid-template-columns: 1fr; text-align:left}
+      .avatar{margin:auto}
+      nav{display:none}
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Lang Cheng</h1>
+    <div class="brand">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden>
+        <rect width="24" height="24" rx="6" fill="#0078d4"></rect>
+        <path d="M7 12h10M7 8h10M7 16h6" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <h1>Lang Cheng</h1>
+        <div style="font-size:0.82rem;color:var(--muted)">Robotics · Computer Vision · Machine Learning</div>
+      </div>
+    </div>
+
+    <nav aria-label="Main navigation">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#objectives">Objectives</a>
+      <a href="#projects">Projects</a>
+      <a href="#cpd">CPD</a>
+    </nav>
+
     <div class="icons">
+      <!-- Replace URLs with your real profiles -->
       <a href="https://www.linkedin.com/in/langcheng2000" target="_blank" rel="noopener" title="LinkedIn"><i class="ri-linkedin-fill"></i></a>
       <a href="https://github.com/langcheng01" target="_blank" rel="noopener" title="GitHub"><i class="ri-github-fill"></i></a>
+      <a href="CV_URL" target="_blank" rel="noopener" title="Download CV"><i class="ri-file-text-line"></i></a>
     </div>
   </header>
 
   <main>
-    <section class="about">
-      <img src="https://avatars.githubusercontent.com/u/000000?v=4" alt="Lang Cheng photo" />
-      <p>
-        I am a Robotics postgraduate at the University of Manchester, driven by a passion for integrating algorithmic intelligence with real-world systems. 
-        My academic research and hands-on projects have honed my expertise in computer vision and machine learning, which I apply to a diverse toolkit of 
-        modern software and hardware technologies to solve complex challenges.
-      </p>
-    </section>
-
-    <section id="cpd">
-      <h2>Continuous Professional Development (CPD) Records</h2>
-      <div id="cpd-list">
-        <!-- Sample CPD entries -->
-        <div class="cpd-card">
-          <h3>ROS Workshop</h3>
-          <p><strong>Date:</strong> 2025-03-12</p>
-          <p><strong>Type:</strong> Training</p>
-          <p>Attended a full-day ROS2 simulation and control workshop covering Gazebo and Rviz integration.</p>
-        </div>
-
-        <div class="cpd-card">
-          <h3>Machine Vision for Robotics Research</h3>
-          <p><strong>Date:</strong> 2025-06-20</p>
-          <p><strong>Type:</strong> Research</p>
-          <p>Conducted experiments applying convolutional neural networks for robot arm pose estimation.</p>
+    <!-- HERO / About -->
+    <section id="about" class="hero" aria-labelledby="about-heading">
+      <div class="avatar" aria-hidden>
+        <!-- AVATAR_URL: replace with your real photo or GitHub avatar -->
+        <img src="AVATAR_URL" alt="Photo of Lang Cheng — replace with your photo" />
+      </div>
+      <div class="bio">
+        <h2 id="about-heading" style="border-left:none;padding-left:0">Short bio</h2>
+        <p>
+          Robotics postgraduate at the University of Manchester focusing on computer vision for perception and control. I build practical systems that bridge research and real robots.
+        </p>
+        <div class="muted">Short context for visuals: demo videos show live robot demos (YOLO-based tracking, gesture-control arm).</div>
+        <div class="chips" aria-hidden>
+          <!-- Short skills preview -->
+          <span class="chip">Python</span>
+          <span class="chip">PyTorch</span>
+          <span class="chip">ROS2</span>
+          <span class="chip">OpenCV</span>
+          <span class="chip">C++</span>
+          <span class="chip">Robotics</span>
         </div>
       </div>
     </section>
 
-    <section id="videos">
-      <h2>Project Videos</h2>
-      <div class="video-card">
-        <h3>Autonomous Object Tracking Robot</h3>
-        <p>Demonstration of my object tracking robot using YOLOv8 and ROS2 control stack.</p>
-        <!-- Example YouTube embed -->
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/ScMzIvxBSi4" 
-                title="YouTube video player" frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen></iframe>
+    <!-- SKILLS -->
+    <section id="skills" aria-labelledby="skills-heading">
+      <h2 id="skills-heading">Skills (short)</h2>
+      <div class="card">
+        <div class="skills" role="list">
+          <div class="chip" role="listitem">Computer Vision (YOLO, pose estimation)</div>
+          <div class="chip" role="listitem">Deep Learning (CNNs, transfer learning)</div>
+          <div class="chip" role="listitem">Robotics (ROS2, Gazebo, RViz)</div>
+          <div class="chip" role="listitem">Perception & SLAM</div>
+          <div class="chip" role="listitem">Software Engineering (Git, Docker)</div>
+          <div class="chip" role="listitem">Data Analysis & Visualization</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OBJECTIVES / RESEARCH -->
+    <section id="objectives" aria-labelledby="obj-heading">
+      <h2 id="obj-heading">Career objectives & research interests</h2>
+      <div class="card">
+        <ul style="margin:0 0 0.6rem 1.2rem; color:var(--muted)">
+          <li>Develop robust visual perception systems for collaborative robots and assistive platforms.</li>
+          <li>Apply domain adaptation & sim-to-real techniques to transfer models to real hardware.</li>
+          <li>Contribute to open-source robotics tools and publish reproducible research.</li>
+        </ul>
+        <div style="font-size:0.9rem;color:var(--muted)">Short — keep reading for projects, code links and reports.</div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" aria-labelledby="projects-heading">
+      <h2 id="projects-heading">Selected projects (short descriptions)</h2>
+      <div class="grid projects">
+        <!-- Project 1 -->
+        <article class="card project-card">
+          <h3>Autonomous Object Tracking Robot</h3>
+          <p>Real-time object detection (YOLOv8) + ROS2 control for autonomous pick-and-follow demos.</p>
+          <div class="project-links">
+            <a class="btn btn-outline" href="https://github.com/langcheng01/object-tracking-robot" target="_blank" rel="noopener">Repo</a>
+            <a class="btn btn-outline" href="REPORT_LINK" target="_blank" rel="noopener">Report</a>
+            <a class="btn btn-primary" href="#videos">Demo</a>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="card project-card">
+          <h3>Human–Robot Collaboration (Gesture Control)</h3>
+          <p>Lightweight gesture recognition pipeline to command collaborative arm motions in real time.</p>
+          <div class="project-links">
+            <a class="btn btn-outline" href="https://github.com/langcheng01/gesture-robot" target="_blank" rel="noopener">Repo</a>
+            <a class="btn btn-outline" href="REPORT_LINK_2" target="_blank" rel="noopener">Report</a>
+            <a class="btn btn-primary" href="#videos">Demo</a>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="card project-card">
+          <h3>Pose Estimation for Manipulation</h3>
+          <p>Research experiments on CNN-based end-effector pose estimation with synthetic data augmentation.</p>
+          <div class="project-links">
+            <a class="btn btn-outline" href="https://github.com/langcheng01/pose-estimation" target="_blank" rel="noopener">Repo</a>
+            <a class="btn btn-outline" href="PREPRINT_OR_REPORT" target="_blank" rel="noopener">Paper / Report</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- VIDEOS / MEDIA -->
+    <section id="videos" aria-labelledby="videos-heading">
+      <h2 id="videos-heading">Project videos (short captions & credits)</h2>
+      <div class="grid media">
+        <div class="card video-card">
+          <h3>Autonomous Object Tracking Robot — demo</h3>
+          <p style="margin:0 0 0.5rem;color:var(--muted)">Short: YOLOv8 detects a target and the robot continuously follows it; ROS2 sends motion commands.</p>
+          <!-- YouTube embed (keep credits) -->
+          <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4" title="Autonomous Object Tracking demo" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <div class="credits">Video source: YouTube — uploader / timestamp must be attributed where applicable. If you did not create this video, add the original uploader's name here.</div>
+          <!-- Add repo & report links -->
+          <div style="margin-top:0.6rem;">
+            <a class="btn btn-outline" href="https://github.com/langcheng01/object-tracking-robot" target="_blank" rel="noopener">Source code</a>
+            <a class="btn btn-outline" href="REPORT_LINK" target="_blank" rel="noopener">Project report</a>
+          </div>
+        </div>
+
+        <div class="card video-card">
+          <h3>Human–Robot Collaboration — demo</h3>
+          <p style="margin:0 0 0.5rem;color:var(--muted)">Short: gesture recognition controls a UR-style collaborative arm for simple pick/place tasks.</p>
+          <video controls>
+            <source src="videos/robot-demo.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="credits">Video: produced by author (Lang Cheng). If any third-party clip is used, include uploader/creator credit and link to source.</div>
+          <div style="margin-top:0.6rem;">
+            <a class="btn btn-outline" href="https://github.com/langcheng01/gesture-robot" target="_blank" rel="noopener">Source code</a>
+            <a class="btn btn-outline" href="REPORT_LINK_2" target="_blank" rel="noopener">Project report</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CPD Records -->
+    <section id="cpd" aria-labelledby="cpd-heading">
+      <h2 id="cpd-heading">CPD records (short)</h2>
+      <div class="card">
+        <div style="display:flex; gap:1rem; flex-direction:column">
+          <div><strong>ROS2 Workshop</strong> — 12 March 2025 • 1-day hands-on on Gazebo + RViz integration.</div>
+          <div><strong>Machine Vision for Robotics Research</strong> — 20 June 2025 • Experiments on CNN pose estimation.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT / LINKS -->
+    <section id="contact" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Links & contact</h2>
+      <div class="card" style="display:flex;gap:1rem;flex-wrap:wrap;align-items:center;justify-content:space-between;">
+        <div style="display:flex; gap:0.6rem; align-items:center; flex-wrap:wrap;">
+          <a class="btn btn-outline" href="https://github.com/langcheng01" target="_blank" rel="noopener"><i class="ri-github-fill"></i> GitHub</a>
+          <a class="btn btn-outline" href="https://www.linkedin.com/in/langcheng2000" target="_blank" rel="noopener"><i class="ri-linkedin-fill"></i> LinkedIn</a>
+          <a class="btn btn-outline" href="CV_URL" target="_blank" rel="noopener"><i class="ri-file-text-line"></i> CV (PDF)</a>
+        </div>
+        <div style="color:var(--muted); font-size:0.92rem">Email: <a href="mailto:your.email@manchester.ac.uk">your.email@manchester.ac.uk</a></div>
       </div>
 
-      <div class="video-card">
-        <h3>Human-Robot Collaboration Demo</h3>
-        <p>Real-time gesture recognition to control a collaborative robot arm.</p>
-        <!-- Or local video example -->
-        <video controls poster="">
-          <source src="videos/robot-demo.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
+      <div class="credits" style="margin-top:0.6rem">
+        <strong>Media & copyright notice:</strong> All videos and images must be your own or explicitly credited. Example credit lines are shown below each media item — edit them to reference original creators or add license details. Failure to attribute copyrighted material will incur penalties.
       </div>
     </section>
   </main>
 
   <footer>
-    © 2025 Lang Cheng — CPD Portfolio
+    © 2025 Lang Cheng · replace placeholders (avatar/CV/links) with real assets before submission.
   </footer>
 </body>
 </html>
